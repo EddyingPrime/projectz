@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Reservation;
+use App\Models\Reservation; // Import your Reservation model if needed
 
 class AdminController extends Controller
 {
     public function index()
     {
-        // Retrieve reservation data (adjust the query based on your model)
-        $reservations = Reservation::all();
+        // Retrieve reservations or any other data you want to display
+        $reservations = Reservation::all(); // You can replace this with your actual query
 
-        // Load the reservations view with data
-        return view('reservations', compact('reservations'));
+        // Load the admin dashboard view with data
+        return view('admin', compact('reservations'));
     }
 }

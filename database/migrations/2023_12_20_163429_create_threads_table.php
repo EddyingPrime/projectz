@@ -10,7 +10,7 @@ class CreateThreadsTable extends Migration
     {
         Schema::create('threads', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Add this line for the user_id foreign key
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
             $table->string('title');
             $table->text('content');
             $table->timestamps();
