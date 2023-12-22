@@ -36,13 +36,14 @@
         </header>
 
         <nav>
-            <a href="#">Home</a>
-            <a href="#">Games</a>
-            <a href="#">Reservations</a>
-            <a href="#">Login</a>
-            <a href="#">Register</a>
-            <!-- Add more navigation links as needed -->
-        </nav>
+    <a href="/admin">Home</a>
+    <a href="/admin/reservations">Reservations</a>
+    <a href="{{ route('boardgames.add') }}">Games add</a>
+    <a href="/boardgames">Games</a>
+    <a href="{{ route('admin.register') }}">Registration</a>
+    <a href="#">Login</a>
+    <!-- Add more navigation links as needed -->
+</nav>
 
         <main>
             @yield('content')

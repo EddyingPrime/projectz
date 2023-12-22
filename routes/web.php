@@ -1,34 +1,30 @@
 <?php
 
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+// routes/web.php
+
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\BoardGameController;
+use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
-// Use the 'create' method from the BoardGameController to show the form
-Route::get('/', function () {
-    return view('welcome');
+
+// BoardGames route
+Route::get('/boardgames', [BoardGameController::class, 'index'])->name('boardgames');
+Route::post('/boardgames', [BoardGameController::class, 'store'])->name('boardgames.store'); // Adjust the method and controller as needed
+Route::get('/boardgames/add', [BoardGameController::class, 'create'])->name('boardgames.add');
+Route::get('/boardgames/{id}', [BoardGameController::class, 'show'])->name('boardgames.show');
+
+
+
+// Admin routes
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/register', [AdminAuthController::class, 'showRegistrationForm'])->name('admin.register');
+    Route::post('/register', [AdminAuthController::class, 'register']);
+    Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('/login', [AdminAuthController::class, 'login']);
+    Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
 });
 
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::get('/boardgames/add', [BoardGameController::class, 'create'])->name('boardgames.add');
-
-// Use the 'store' method from the BoardGameController to handle form submission
-Route::post('/boardgames', [BoardGameController::class, 'store'])->name('boardgames.store');
-
-
-Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');

@@ -80,41 +80,41 @@ public function login(Request $request)
      * @return \Illuminate\Http\JsonResponse
      */
     public function updateProfile(Request $request)
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
 
-        // Validate the request data
-        $request->validate([
-            'name' => 'string|max:255',
-            'email' => 'string|email|max:255|unique:users,email,' . $user->id,
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
-            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
-        ]);
+    // Validate the request data
+    $request->validate([
+        'name' => 'string|max:255',
+        'email' => 'string|email|max:255|unique:users,email,' . $user->id,
+        'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
-        // Update name and email
-        $user->name = $request->input('name', $user->name);
-        $user->email = $request->input('email', $user->email);
+    // Update name and email
+    $user->name = $request->input('name', $user->name);
+    $user->email = $request->input('email', $user->email);
 
-
-      // Handle profile image update
-if ($request->hasFile('avatar')) {
-    $avatar = $request->file('avatar');
-    $avatarFilename = $avatar->getClientOriginalName();
-    $avatar->storeAs('avatar', $avatarFilename);
-    $user->avatar = $avatarFilename;
-}
-
-// Handle cover image update
-if ($request->hasFile('cover_image')) {
-    $cover_image = $request->file('cover_image');
-    $coverImageFilename = $cover_image->getClientOriginalName();
-    $cover_image->storeAs('cover_image', $coverImageFilename);
-    $user->cover_image = $coverImageFilename;
-}
-
-        // Save changes to the database
-        $user->save();
-
-        return response()->json(['message' => 'Profile updated successfully']);
+    // Handle profile image update
+    if ($request->hasFile('avatar')) {
+        $avatar = $request->file('avatar');
+        $avatarFilename = $avatar->getClientOriginalName();
+        $avatar->storeAs('avatar', $avatarFilename);
+        $user->avatar = $avatarFilename;
     }
+
+    // Handle cover image update
+    if ($request->hasFile('cover_image')) {
+        $coverImage = $request->file('cover_image');
+        $coverImageFilename = $coverImage->getClientOriginalName();
+        $coverImage->storeAs('cover_image', $coverImageFilename);
+        $user->cover_image = $coverImageFilename;
+    }
+
+    // Save changes to the database
+    $user->save();
+
+    // Return the updated user data in the response
+    return response()->json(['message' => 'Profile updated successfully', 'user' => $user]);
+}
 }

@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BoardGameController;
 use App\Http\Controllers\ForumController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ReservationController; 
+// use App\Http\Controllers\AdminController;
+// use App\Http\Controllers\ReservationController; 
 
 // Registration
 Route::post('/register', [UserController::class, 'register']);
@@ -38,14 +38,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/threads/{threadId}/upvote', [ForumController::class, 'removeUpvote']);
 });
 
-// API Routes for Reservations
-Route::prefix('api')->group(function () {
-    Route::get('/reservations', [ReservationController::class, 'index']);
-    Route::get('/reservations/{id}', [ReservationController::class, 'show']);
-    Route::post('/reservations', [ReservationController::class, 'store']);
-    Route::put('/reservations/{id}', [ReservationController::class, 'update']);
-    Route::delete('/reservations/{id}', [ReservationController::class, 'destroy']);
-});
+// // API Routes for Reservations
+// Route::prefix('api')->group(function () {
+//     Route::get('/reservations', [ReservationController::class, 'index']);
+//     Route::get('/reservations/{id}', [ReservationController::class, 'show']);
+//     Route::post('/reservations', [ReservationController::class, 'store']);
+//     Route::put('/reservations/{id}', [ReservationController::class, 'update']);
+//     Route::delete('/reservations/{id}', [ReservationController::class, 'destroy']);
+// });
 
 // Board Games Routes
 Route::prefix('/board-games')->group(function () {
@@ -56,5 +56,4 @@ Route::prefix('/board-games')->group(function () {
     Route::delete('/{id}', [BoardGameController::class, 'destroy']);
 });
 
-// API Resource for Reservations
-Route::apiResource('/reservations', ReservationController::class);
+
